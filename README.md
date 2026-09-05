@@ -1,43 +1,45 @@
 # keyboard-tester
 
-Open-source core for browser-based keyboard testers, powering
+**The ChromeOS-aware keyboard tester core, open for audit.** Powers
 [keyboardtestonline.com](https://keyboardtestonline.com). TypeScript, zero
 runtime dependencies, no server. Every keypress stays in the browser.
 
-## A real ChromeOS keyboard layout
+## Not a Windows keyboard with different labels
 
-Most "Chromebook keyboard tester" projects are Windows keyboards with
-different key labels. This one is a faithful ChromeOS layout: Search replaces
-Caps Lock, the top row is real Chromebook action keys (Back, Refresh, Full
-screen, brightness, volume) that report their browser codes, and there is no
-numpad or PrtSc block. `normalizeChromeosCode` maps F1-F10 back to the action
-codes for Chromebooks in function-key mode.
+Search for a Chromebook keyboard tester and you mostly find Windows keyboard
+layouts wearing different key caps. This core is different where it matters:
 
-## Why this is open source
+- Search replaces Caps Lock, exactly as on a Chromebook.
+- The top row is real Chromebook action keys (Back, Refresh, Full screen,
+  brightness, volume), not F1-F12 in disguise.
+- `normalizeChromeosCode` maps F1-F10 back to the action codes for
+  Chromebooks in function-key mode.
+- No numpad, no PrtSc block, no leftover Win or Menu keys.
 
-Privacy claims are easy to make and hard to check. This repo is the checkable
-half of the promise: **nothing you type leaves the browser**, because the
-input handling here only ever produces a local state object. No network call,
-no telemetry, no data model that could carry keystrokes anywhere.
+This is the layout a school IT check or a used-Chromebook buyer actually
+needs, because the keys they worry about are the ones that look wrong on a
+Windows tester.
 
-Review the pieces that matter:
+## The privacy claim is the code
 
-- `src/keyState.ts`, the state machine a keypress moves through. Every
-  transition is pure and local.
-- `src/keyboardEvents.ts`, which browser keys the tester should swallow so
-  the page itself does not trigger shortcuts while you test.
-- `src/keyReport.ts`, which builds a text report from key labels and codes
-  only. It never has access to what you typed, because it was never collected.
+"You never upload keystrokes" is easy to say and hard to verify. Here it is
+verifiable in three files:
+
+- `src/keyState.ts`, the state machine a keypress moves through. Pure
+  functions, local state only.
+- `src/keyboardEvents.ts`, which browser keys the tester swallows so the page
+  itself does not trigger shortcuts while you test.
+- `src/keyReport.ts`, which formats a text report from key codes alone. It
+  never sees what you typed, because nothing was collected.
+
+No network call exists in this package. There is nothing to review past those
+three files.
 
 ## Layouts
 
-- ANSI and ISO boards, with Windows and Mac label variants.
-- ChromeOS, described above: Search instead of Caps Lock, action-key top row,
-  no numpad. This is the layout a school IT check or a used-Chromebook buyer
-  actually needs.
-
-Layouts collapse by size (full, TKL, 75%, 65%, 60%) while keeping columns
-aligned.
+- ANSI and ISO boards, Windows and Mac label variants.
+- The ChromeOS layout above, faithful to the hardware.
+- Size collapse (full, TKL, 75%, 65%, 60%) keeps columns aligned.
 
 ## Usage
 
@@ -72,8 +74,8 @@ ChromeOS code normalization, and report formatting.
 
 ## Live demo
 
-Try the real thing at [keyboardtestonline.com](https://keyboardtestonline.com).
-The ChromeOS layout is on
+[keyboardtestonline.com](https://keyboardtestonline.com) runs this core. The
+ChromeOS layout is on
 [/chromebook](https://keyboardtestonline.com/chromebook). Dead-key, rollover,
 latency, polling-rate, chatter, CPS, and switch tests are all there too.
 
