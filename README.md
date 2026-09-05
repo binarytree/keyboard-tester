@@ -1,13 +1,34 @@
 # keyboard-tester
 
-**The ChromeOS-aware keyboard tester core, open for audit.** Powers
-[keyboardtestonline.com](https://keyboardtestonline.com). TypeScript, zero
-runtime dependencies, no server. Every keypress stays in the browser.
+Open-source keyboard tester for the browser: **ChromeOS, Windows, and Mac
+layouts**, a key state machine, and copy-ready reports. TypeScript and Svelte,
+zero server, no telemetry. Every keypress stays in the browser.
+
+Powers [keyboardtestonline.com](https://keyboardtestonline.com).
+
+## Run the demo
+
+```bash
+npm install
+npm run dev
+```
+
+Open the printed URL. Press keys on your real keyboard; they light up on the
+board. Switch Win / Mac / ChromeOS in the toolbar. Build a static copy with
+`npm run build`, serve `dist-demo/` anywhere.
+
+## What is in here
+
+- `src/`, the framework-free core. Layouts (ANSI, ISO, ChromeOS), the key
+  state machine, browser key-event policy, report formatting, polling-rate
+  estimation. No DOM assumptions beyond `KeyboardEvent`.
+- `components/`, a Svelte 5 tester component that renders the core. Drop it in
+  any Svelte app; translation strings are props with English defaults.
 
 ## Not a Windows keyboard with different labels
 
 Search for a Chromebook keyboard tester and you mostly find Windows keyboard
-layouts wearing different key caps. This core is different where it matters:
+layouts wearing different key caps. This one is faithful to the hardware:
 
 - Search replaces Caps Lock, exactly as on a Chromebook.
 - The top row is real Chromebook action keys (Back, Refresh, Full screen,
@@ -41,7 +62,7 @@ three files.
 - The ChromeOS layout above, faithful to the hardware.
 - Size collapse (full, TKL, 75%, 65%, 60%) keeps columns aligned.
 
-## Usage
+## Usage without Svelte
 
 ```ts
 import {
@@ -65,7 +86,6 @@ document.addEventListener("keydown", (e) => {
 ## Tests
 
 ```bash
-npm install
 npm test
 ```
 

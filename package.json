@@ -1,13 +1,24 @@
 {
   "name": "keyboard-tester",
   "version": "1.0.0",
-  "description": "Pure TypeScript core for browser keyboard testers: ANSI/ISO/ChromeOS layouts, key state machine, reports. Privacy-auditable, no network.",
+  "description": "Open-source browser keyboard tester: ChromeOS, ANSI & ISO layouts, key state machine, reports. Clone and run. Powers keyboardtestonline.com.",
   "license": "MIT",
   "type": "module",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
-  "files": ["src"],
+  "files": ["src", "components"],
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./KeyboardTester.svelte": "./components/KeyboardTester.svelte",
+    "./KeyboardBoard.svelte": "./components/KeyboardBoard.svelte"
+  },
   "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },
@@ -19,10 +30,14 @@
     "chromeos",
     "nkro",
     "key-rollover",
+    "svelte",
     "typescript"
   ],
   "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^5.0.0",
+    "svelte": "^5.0.0",
     "typescript": "^6.0.3",
+    "vite": "^6.0.0",
     "vitest": "^4.1.10"
   }
 }
