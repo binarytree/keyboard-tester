@@ -1,3 +1,9 @@
+<div align="center">
+
+**English** | [简体中文](README.zh-CN.md) | [Español](README.es.md) | [Deutsch](README.de.md) | [日本語](README.ja.md)
+
+</div>
+
 # keyboard-tester
 
 Open-source keyboard tester for the browser: **ChromeOS, Windows, and Mac
